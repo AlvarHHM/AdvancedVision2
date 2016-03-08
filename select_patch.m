@@ -14,7 +14,7 @@ function [fitlist,plane] = select_patch(points)
         continue
     end
     % find points in the neighborhood of the given point
-    DISTTOL = 5.0;
+    DISTTOL = 3.0;
     fitcount = 0;
     restcount = 0;
     for i = 1 : L
@@ -28,12 +28,11 @@ function [fitlist,plane] = select_patch(points)
       end
     end
     oldlist = tmprest(1:restcount,:);
-
+    fitcount
     if fitcount > 10
       % fit a plane
       [plane,resid] = fitplane(tmpnew(1:fitcount,:))
-
-      if resid < 5.1
+      if resid < 2
         fitlist = tmpnew(1:fitcount,:);
         return
       end

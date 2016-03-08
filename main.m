@@ -24,12 +24,18 @@ plot3(R(:,4),R(:,5),R(:,6),'k.')
 
 % extrac background
 depth_cloud = R(:,4:6);
+% remove 0 row
+depth_cloud = depth_cloud(any(depth_cloud,2),:);
+[L,W] = size(depth_cloud);
 for i = 1 : 1
 
     [oldlist, plane] = select_patch(depth_cloud);
+    plot3(oldlist(:,1),oldlist(:,2),oldlist(:,3), 'r.')
+    
 
     while true
-        [newlist, depth_cloud] = getallpoints(plane, oldlist, depth_cloud, L*W);
+        
+        [newlist, depth_cloud] = getallpoints(plane, oldlist, depth_cloud, L);
         plot3(newlist(:,1),newlist(:,2),newlist(:,3), 'r.')
         pause(0.1)
         
@@ -38,7 +44,13 @@ for i = 1 : 1
         
         if Nnew > Nold + 50
             [plane, fit] = fitplane(newlist)
+%             if fit > 0.04*NewL       % bad fit - stop growing
+%                 ['bad fit']
+%                 break
+%             end
             oldlist = newlist;
+        else
+            break
         end
         
     end

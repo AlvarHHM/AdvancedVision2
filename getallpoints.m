@@ -6,31 +6,41 @@ function [newlist,remaining] = getallpoints(plane,oldlist,P,NP)
   [N,W] = size(P);
 %   oldlist = flipud(oldlist);
   [Nold,W] = size(oldlist);
-  DISTTOL = 10;
-  PLANETOL = 50;
+  DISTTOL = 10.0;
+  PLANETOL = 100;
   tmpnewlist = zeros(NP,3);
   tmpnewlist(1:Nold,:) = oldlist;       % initialize fit list
   tmpremaining = zeros(NP,3);           % initialize unfit list
   countnew = Nold;
   countrem = 0;
+  oldlist_center = mean(oldlist)
+  dist2center = max(sum(abs(oldlist - repmat(oldlist_center, Nold,1)),2))
+  max_dist = (dist2center * 1.2)
  
   for i = 1 : N
     pnt(1:3) = P(i,:);
+    if norm(oldlist_center - P(i,:)) > max_dist
+        countrem = countrem + 1;
+        tmpremaining(countrem,:) = P(i,:);
+        continue
+    end
     notused = 1;
-    
+    if mod(i, 1000) == 0
+        i
+    end
     % see if point lies in the plane
-    if abs(pnt'*plane) < DISTTOL
+    if abs(pnt'*plane) < DISTTOL 
       % see if an existing nearby point already in the set
       for k = 1 : Nold
-%           countnew = countnew + 1;
-%           tmpnewlist(countnew,:) = P(i,:);
-%           notused = 0;
-        if norm(oldlist(k,:) - P(i,:)) < PLANETOL
           countnew = countnew + 1;
           tmpnewlist(countnew,:) = P(i,:);
           notused = 0;
-          break;
-        end
+%         if norm(oldlist(k,:) - P(i,:)) < PLANETOL
+%           countnew = countnew + 1;
+%           tmpnewlist(countnew,:) = P(i,:);
+%           notused = 0;
+%           break;
+%         end
       end      
     end
   

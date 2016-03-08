@@ -27,8 +27,8 @@ for i = 1 : 4
         % find neighbouring points that lie in plane
         stillgrowing = 0;
         [newlist,remaining] = getallpoints(plane,oldlist,remaining,NPts);
-        [NewL,W] = size(newlist);
-        [OldL,W] = size(oldlist);
+        [NewL,W] = size(newlist)
+        [OldL,W] = size(oldlist)
         if i == 1
             plot3(newlist(:,1),newlist(:,2),newlist(:,3),'r.')
             save1=newlist;
