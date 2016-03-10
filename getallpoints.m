@@ -2,57 +2,40 @@
 % TOL of a point already in the plane (oldlist)
 function [newlist,remaining] = getallpoints(plane,oldlist,P,NP)
 
-  pnt = ones(4,1);
-  [N,W] = size(P);
+pnt = ones(4,1);
+[N,~] = size(P);
 %   oldlist = flipud(oldlist);
-  [Nold,W] = size(oldlist);
-  DISTTOL = 10.0;
-  PLANETOL = 100;
-  tmpnewlist = zeros(NP,3);
-  tmpnewlist(1:Nold,:) = oldlist;       % initialize fit list
-  tmpremaining = zeros(NP,3);           % initialize unfit list
-  countnew = Nold;
-  countrem = 0;
-  oldlist_center = mean(oldlist)
-  dist2center = max(sum(abs(oldlist - repmat(oldlist_center, Nold,1)),2))
-  max_dist = (dist2center * 1.2)
- 
-  for i = 1 : N
-    pnt(1:3) = P(i,:);
-    if norm(oldlist_center - P(i,:)) > max_dist
+[Nold,~] = size(oldlist);
+DISTTOL = 15.0;
+tmpnewlist = zeros(NP,6);   
+tmpnewlist(1:Nold,:) = oldlist;       % initialize fit list
+tmpremaining = zeros(NP,6);           % initialize unfit list
+countnew = Nold;
+countrem = 0;
+oldlist_center = mean(oldlist(:,4:6));
+dist2center = max(sum(abs(oldlist(:,4:6) - repmat(oldlist_center, Nold,1)),2));
+max_dist = (dist2center * 30);
+
+for i = 1 : N
+    pnt(1:3) = P(i,4:6);
+    notused = 1;
+    % see if point lies in the plane
+    if norm(oldlist_center - P(i,4:6)) < max_dist && abs(pnt'*plane) < DISTTOL
+        % see if an existing nearby point already in the set
+        countnew = countnew + 1;
+        tmpnewlist(countnew,:) = P(i,:);
+        notused = 0;
+    end
+    
+    if notused
         countrem = countrem + 1;
         tmpremaining(countrem,:) = P(i,:);
-        continue
     end
-    notused = 1;
-    if mod(i, 1000) == 0
-        i
-    end
-    % see if point lies in the plane
-    if abs(pnt'*plane) < DISTTOL 
-      % see if an existing nearby point already in the set
-      for k = 1 : Nold
-          countnew = countnew + 1;
-          tmpnewlist(countnew,:) = P(i,:);
-          notused = 0;
-%         if norm(oldlist(k,:) - P(i,:)) < PLANETOL
-%           countnew = countnew + 1;
-%           tmpnewlist(countnew,:) = P(i,:);
-%           notused = 0;
-%           break;
-%         end
-      end      
-    end
-  
-    if notused
-      countrem = countrem + 1;
-      tmpremaining(countrem,:) = P(i,:);
-    end
-  end
+end
 
-  newlist = tmpnewlist(1:countnew,:);
-  remaining = tmpremaining(1:countrem,:);
-countnew
-countrem
-Nold
+newlist = tmpnewlist(1:countnew,:);
+remaining = tmpremaining(1:countrem,:);
+countnew;
+countrem;
+Nold;
 
