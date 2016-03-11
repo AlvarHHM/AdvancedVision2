@@ -8,10 +8,8 @@ tmprest = zeros(L,6);
 % pick a random point until a successful plane is found
 success = 0;
 while ~success
-    disp('select patch')
     idx = floor(L*rand) + 1;
     pnt = points(idx, 4:6);
-    L
     % find points in the neighborhood of the given point
     DISTTOL = 3.0;
     fitcount = 0;
