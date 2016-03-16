@@ -1,4 +1,4 @@
-function [ remaining ] = backgroundsub( depth_cloud )
+function [ remaining, plane ] = backgroundsub( depth_cloud )
 
 % figure(1)
 % plot3(depth_cloud(:,4),depth_cloud(:,5),depth_cloud(:,6),'k.')

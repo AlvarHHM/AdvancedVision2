@@ -3,6 +3,7 @@ mcolor = {'g', 'r', 'b', 'y', 'm', 'w', 'k'};
 load('av_pcl.mat');
 clf
 fg_clouds = {};
+bg_planes = zeros(16,4);
 for f = 1 : 16
     f
     R = pcl_cell{f};
@@ -17,7 +18,7 @@ for f = 1 : 16
     
     accepted = false;
     while ~accepted
-        fg_cloud = backgroundsub(depth_cloud);
+        [fg_cloud, bg_plane] = backgroundsub(depth_cloud);
         
         % remove ouliner
         [Row, ~] = size(fg_cloud);
@@ -30,21 +31,23 @@ for f = 1 : 16
         [idx, C, sumd, D] = kmeans(fg_cloud(:,4:6), 4, 'Replicates', 3);
         
         distanceMatrix = squareform(pdist(C));
-        stdvDist = std(mean(distanceMatrix))
+        stdvDist = std(mean(distanceMatrix));
         if stdvDist >= 41 && stdvDist <= 45
             accepted = true;
         end 
     end
+    bg_planes(f,:) = bg_plane;
     
-%     figure(f)
-%     clf
-%     hold on
-%     pcshow(fg_cloud(:,4:6))
-%     hold on
-%     plot3(C(:,1), C(:,2), C(:,3), 'gh')
+    figure(f)
+    clf
+    hold on
+    pcshow(fg_cloud(:,4:6))
+    hold on
+    plot3(C(:,1), C(:,2), C(:,3), 'gh')
     
     fg_clouds{f} = fg_cloud;
     
     
 end
+% save bg_planes.mat bg_planes
 % save fg.mat fg_clouds
