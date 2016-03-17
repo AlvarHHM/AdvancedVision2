@@ -50,4 +50,4 @@ for f = 1 : 16
     
 end
 save bg_planes.mat bg_planes
-% save fg.mat fg_clouds
+save fg.mat fg_clouds

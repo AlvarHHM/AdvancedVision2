@@ -14,7 +14,7 @@ countnew = Nold;
 countrem = 0;
 oldlist_center = mean(oldlist(:,4:6));
 dist2center = max(sum(abs(oldlist(:,4:6) - repmat(oldlist_center, Nold,1)),2));
-max_dist = (dist2center * 5);
+max_dist = (dist2center * 1.5);
 
 for i = 1 : N
     pnt(1:3) = P(i,4:6);

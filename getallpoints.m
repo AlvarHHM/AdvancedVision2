@@ -6,7 +6,7 @@ pnt = ones(4,1);
 [N,~] = size(P);
 %   oldlist = flipud(oldlist);
 [Nold,~] = size(oldlist);
-DISTTOL = 15.0;
+DISTTOL = 12.0;
 tmpnewlist = zeros(NP,6);   
 tmpnewlist(1:Nold,:) = oldlist;       % initialize fit list
 tmpremaining = zeros(NP,6);           % initialize unfit list
@@ -14,7 +14,7 @@ countnew = Nold;
 countrem = 0;
 oldlist_center = mean(oldlist(:,4:6));
 dist2center = max(sum(abs(oldlist(:,4:6) - repmat(oldlist_center, Nold,1)),2));
-max_dist = (dist2center * 30);
+max_dist = (dist2center * 1.5);
 
 for i = 1 : N
     pnt(1:3) = P(i,4:6);
