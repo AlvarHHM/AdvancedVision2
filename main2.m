@@ -26,10 +26,11 @@ for f = 1 :16
     hsvOfClust = zeros(numel(unique(idx)), 1);
     for i = 1 : numel(unique(idx))
         clust = cloud(idx == i,:);
-        color = mean(clust(:,1:3));
+        color = (clust(:,1:3));
         color = color / 255;
         hsvcolor = hsv2rgb(color);
-        hsvOfClust(i) = hsvcolor(2);
+        hsvcolor = round(hsvcolor,2);
+        hsvOfClust(i) = mode(hsvcolor(:,1));
     end
     
     [B,I] = sort(hsvOfClust);

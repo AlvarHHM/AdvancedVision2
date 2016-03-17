@@ -8,7 +8,7 @@ clf
 
 % Load point cloud 
 load('fuse.mat');
-point_cloud_noisy = fuse_obj;
+point_cloud_noisy = fuse_obj * 1000;
 % Colour list
 colour_list = {'g', 'r', 'b', 'y', 'm', 'c', 'k',[0.5 0.0 0.5], [1 0.64 0.0]};
 
