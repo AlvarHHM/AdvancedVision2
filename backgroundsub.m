@@ -23,7 +23,7 @@ while L > 100000
             [plane, ~] = fitplane(newlist(:,4:6));
             oldlist = newlist;
         else 
-            [plane, fit] = fitplane(newlist(:,4:6))
+            [plane, ~] = fitplane(newlist(:,4:6));
             remaining = depth_cloud;
             size(remaining);
             break;

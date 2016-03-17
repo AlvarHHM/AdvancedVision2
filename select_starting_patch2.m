@@ -37,7 +37,7 @@ while (~success)
     end
 
     % If there are a certain amount of points nearby...
-    if fitcount > 10
+    if fitcount > 15
         % Fit a plane to the points near the randomly selected point
         [plane, resid] = fitplane(tmpnew(1:fitcount,1:3));
         % Is the fitting error below a threshold?

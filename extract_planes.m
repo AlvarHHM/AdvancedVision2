@@ -43,7 +43,7 @@ function [plane_list, points_matrix] = extract_planes(point_cloud, colours)
                 old_list = list_of_points_on_plane;
             else
                 plane_no = plane_no + 1;
-                [plane, ~] = fitplane(list_of_points_on_plane(:, 1:3));
+                [plane, ~] = fitplane(list_of_points_on_plane(:, 1:3))
                 plane_list(plane_no,:) = plane';
                 points_matrix{plane_no} = list_of_points_on_plane; 
                 [L, ~] = size(list_of_points_on_plane)

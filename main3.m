@@ -3,13 +3,18 @@ load fg.mat
 load obj.mat
 load bg_planes.mat
 
-base = balls{2};
+% balls(1) = [];
+% fg_clouds(1) = [];
+% obj(1) = [];
+
+
+base = balls{1};
 
 
 fuse_obj = [];
 R = cell(1,16) ;
 t = cell(1,16);
-for f = 1: 16
+for f = 1: size(balls,2)
     cloud = fg_clouds{f}(:,4:6);
     [L,~] = size(obj{f});
     [R{f}, t{f}] = estPose(balls{f}, base);
@@ -19,16 +24,20 @@ for f = 1: 16
 end
 
 %% evel fuse
-norm_vector_diff = zeros(1,16);
-for f = 1 : 16
+norm_vector_diff = zeros(1,15);
+figure(3)
+clf
+hold on
+grid on
+plotv(base(1:3)', 'k-')
+for f = 1 : size(balls,2)
     bg = bg_planes(f,1:3);
     tran_bg_norm = R{f} * bg' + t{f};
-%     figure(3)
-%     hold on
-%     plotv(tran_bg_norm, '-')
-    norm_vector_diff(f) = acos(dot(base(1:3), tran_bg_norm) / norm(base(1:3) * tran_bg_norm));
+    s{f} = tran_bg_norm;
+    plotv(tran_bg_norm, '--')
+    norm_vector_diff(f) = acos(dot(base(1:3), tran_bg_norm) / (norm(base(1:3)) * norm(tran_bg_norm)));
 end
-norm_vector_diff
+radtodeg((norm_vector_diff))
 
 %%
 

@@ -1,35 +1,17 @@
 load planes.mat
+figure(13)
+clf
+p = [
+%     planes_intersect_point(planes(1,:), planes(9,:), planes(2,:));
+% planes_intersect_point(planes(2,:), planes(8,:), planes(3,:));
+% planes_intersect_point(planes(3,:), planes(6,:), planes(4,:));
+% planes_intersect_point(planes(4,:), planes(7,:), planes(1,:));
+planes_intersect_point(planes(9,:), planes(5,:), planes(8,:));
+planes_intersect_point(planes(8,:), planes(5,:), planes(6,:));
+planes_intersect_point(planes(6,:), planes(5,:), planes(7,:));
+planes_intersect_point(planes(7,:), planes(5,:), planes(9,:))];
 
 
 
-% figure(2)
-% hold on
-% points = 0;
+plot3(p(:,1),p(:,2),p(:,3), 'kd')
 
-
-
-% for i = 1 : 10
-%     for j = 1 : 10
-%         for k = 1 : 10
-%           plane1 = planes(i,:);
-%           plane2 = planes(j,:);
-%           plane3 = planes(k,:);
-%           coeff = [plane1; plane2; plane3];
-%           coeff = coeff(:,1:3);
-%           if rank(coeff) == 3
-%               points = points + 1;
-%               point_of_intersection(points,:) = planes_intersect_point(plane1, plane2, plane3);
-%               
-%           end
-% 
-%         end
-%     end
-% end
-% points
-% plot3(point_of_intersection(:,1), point_of_intersection(:,2), point_of_intersection(:,3), 'kd')
-
-% for i = 1 : 10
-%     for j = i : 10
-%         
-%     end
-% end

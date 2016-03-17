@@ -20,8 +20,8 @@ function p = planes_intersect_point( plane1, plane2, plane3 )
     det = a1*bc - b1*ac + c1*ab;
 
     if (abs(det) < tol)
-        p = -1;
-        return;
+%         p = -1;
+%         return;
         error('planes_3d_3_intersct: At least to planes are parallel');
     else
         dc = d2*c3 - d3*c2;
